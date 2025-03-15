@@ -9,6 +9,10 @@
 <body>
 <h1>Bienvenido {{ Auth::user()->name }} a la página principal de la zona PRIVADA.</h1>
 
+@if (session('success'))
+    <h2 style="color: green; font-weight: bold;">{{ session('success') }}</h2>
+@endif
+
 <h2>Mis Mascotas</h2>
 
 @if(count($mascotasDAR) > 0)
@@ -37,6 +41,11 @@
 @else
     <p>No tienes mascotas registradas.</p>
 @endif
+
+<!-- Botón para crear una nueva mascota -->
+<a href="{{ route('formmascotaDAR') }}">
+    <button>Crear Nueva Mascota</button>
+</a>
 
 <p><a href="{{ route('zonapublica') }}">Ve a la zona pública</a></p>
 <p><a href="{{ route('logout') }}">Cierra sesión</a></p>

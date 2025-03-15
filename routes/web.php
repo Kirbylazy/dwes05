@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\MascotaDAR;
+use App\Http\Controllers\MascotaControllerDAR;
 
 //Ruta a la zona pública (simplemente accediendo a / vía GET)
 Route::get('/', function () {
@@ -30,3 +31,9 @@ Route::get('/login', [LoginController::class, 'mostrarFormularioLoginDAR'])->nam
 Route::post('/login', [LoginController::class, 'loginDAR'])->name('login');
 //Creamos una ruta nombrada (logout) tipo POST a '/logout' que cerrará la sesión
 Route::get('/logout', [LoginController::class, 'logoutDAR'])->name('logout');
+// Mostrar el formulario para crear una nueva mascota
+Route::get('/mascota/nueva', [MascotaControllerDAR::class, 'mostrarFormulario'])
+    ->middleware('auth')->name('formmascotaDAR');
+// Guardar la nueva mascota en la base de datos
+Route::post('/mascota/nueva', [MascotaControllerDAR::class, 'crearMascota'])
+    ->middleware('auth')->name('nuevamascotaDAR');
