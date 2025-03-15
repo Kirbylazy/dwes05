@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\MascotaDAR;
+
 
 class User extends Authenticatable
 {
@@ -44,5 +46,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Relación 1:N, Cada usuario puede tener varias mascotas
+    public function mascotas()
+    {
+        return $this->hasMany(MascotaDAR::class);
     }
 }
