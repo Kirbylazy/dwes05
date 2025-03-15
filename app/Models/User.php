@@ -51,6 +51,6 @@ class User extends Authenticatable
     // Relación 1:N, Cada usuario puede tener varias mascotas
     public function mascotas()
     {
-        return $this->hasMany(MascotaDAR::class);
+        return $this->hasMany(MascotaDAR::class, 'user_id', 'id');
     }
 }
