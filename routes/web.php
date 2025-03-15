@@ -1,20 +1,21 @@
 <?php
 
-use App\Models\MascotaDAR;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
-// Ruta a la zona pública
+//Ruta a la zona pública (simplemente accediendo a / vía GET)
 Route::get('/', function () {
-    $mascotas = MascotaDAR::where('publica', 'Si')->get(); // Obtener solo las mascotas públicas
-
-    return view('principal', ['mascotasDAR' => $mascotas]); // Pasar la lista de mascotas a la vista
+    return view('principal');
 })->name('zonapublica');
 
-// Ruta a la zona privada (solo usuarios autenticados)
+//Ruta a la zona privada (simplemente accediendo a /zonaprivada vía GET)
 Route::get('/zonaprivada', function () {
-    $usuario = Auth::user(); // Obtener usuario autenticado
-    $mascotas = $usuario->mascotas; // Obtener sus mascotas
-
-    return view('principalPrivada', ['mascotasDAR' => $mascotas]); // Pasar las mascotas a la vista
+    return view('privada.principal');
 })->middleware('auth')->name('zonaprivada');
+
+//Creamos una ruta nombrada (formlogin) tipo GET a '/login' que mostrará el formulario
+Route::get('/login', [LoginController::class, 'mostrarFormularioLoginDAR'])->name('formlogin');
+//Creamos una ruta nombrada (login) tipo POST a '/login' que procesará el formulario
+Route::post('/login', [LoginController::class, 'loginDAR'])->name('login');
+//Creamos una ruta nombrada (logout) tipo POST a '/logout' que cerrará la sesión
+Route::get('/logout', [LoginController::class, 'logoutDAR'])->name('logout');
