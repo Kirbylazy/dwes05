@@ -18,23 +18,23 @@ class MascotaControllerDAR extends Controller
     public function crearMascota(Request $request)
     {
         // Validar los datos del formulario
-        $request->validate([
-            'nombre' => 'required|string|max:50',
+        $datosvalidados = $request->validate([
+            'nombre' => 'required|string|min:4|max:50',
             'descripcion' => 'required|string|max:250',
-            'tipo' => 'required|in:Perro,Gato,Pájaro,Dragón,Conejo,Hamster,Tortuga,Pez,Serpiente',
-            'publica' => 'required|in:Si,No',
+            'publica' => 'required|string|in:Si,No',
+            'tipo' => 'required|string|in:Perro,Gato,Pájaro,Dragón,Conejo,Hamster,Tortuga,Pez,Serpiente'
         ]);
 
         // Obtener el usuario autenticado
         $usuario = Auth::user();
 
-        // Crear la mascota
+        // Crear la mascota con los datos validados
         MascotaDAR::create([
             'user_id' => $usuario->id,
-            'nombre' => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'tipo' => $request->tipo,
-            'publica' => $request->publica,
+            'nombre' => $datosvalidados['nombre'],
+            'descripcion' => $datosvalidados['descripcion'],
+            'tipo' => $datosvalidados['tipo'],
+            'publica' => $datosvalidados['publica'],
             'megusta' => 0
         ]);
 
