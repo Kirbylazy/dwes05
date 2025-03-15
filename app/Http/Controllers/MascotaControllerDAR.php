@@ -41,4 +41,24 @@ class MascotaControllerDAR extends Controller
         // Redirigir a la zona privada con un mensaje de éxito
         return redirect()->route('zonaprivada')->with('success', 'Mascota creada exitosamente.');
     }
+
+    public function eliminarMascota($id)
+    {
+        // Obtener el usuario autenticado
+        $usuario = Auth::user();
+
+        // Buscar la mascota por ID
+        $mascota = MascotaDAR::find($id);
+
+        // Verificar si la mascota existe y pertenece al usuario autenticado
+        if (!$mascota || $mascota->user_id !== $usuario->id) {
+            return redirect()->route('zonaprivada')->with('error', 'No puedes eliminar esta mascota.');
+        }
+
+        // Eliminar la mascota
+        $mascota->delete();
+
+        // Redirigir con mensaje de éxito
+        return redirect()->route('zonaprivada')->with('success', 'Mascota eliminada correctamente.');
+    }
 }

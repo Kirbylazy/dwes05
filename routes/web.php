@@ -37,3 +37,7 @@ Route::get('/mascota/nueva', [MascotaControllerDAR::class, 'mostrarFormulario'])
 // Guardar la nueva mascota en la base de datos
 Route::post('/mascota/nueva', [MascotaControllerDAR::class, 'crearMascota'])
     ->middleware('auth')->name('nuevamascotaDAR');
+// Eliminar una mascota
+Route::delete('/mascota/eliminar/{id}', [MascotaControllerDAR::class, 'eliminarMascota'])
+    ->middleware('auth')
+    ->name('eliminarMascotaDAR');

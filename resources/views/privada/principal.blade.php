@@ -13,6 +13,10 @@
     <h2 style="color: green; font-weight: bold;">{{ session('success') }}</h2>
 @endif
 
+@if (session('success'))
+    <h2 style="color: green; font-weight: bold;">{{ session('success') }}</h2>
+@endif
+
 <h2>Mis Mascotas</h2>
 
 @if(count($mascotasDAR) > 0)
@@ -34,6 +38,13 @@
                 <td>{{ $mascota->descripcion }}</td>
                 <td>{{ $mascota->tipo }}</td>
                 <td>{{ $mascota->publica }}</td>
+                <td>
+                    <form action="{{ route('eliminarMascotaDAR', ['id' => $mascota->id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('¿Seguro que quieres eliminar esta mascota?')">Borrar</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
         </tbody>
